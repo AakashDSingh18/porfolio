@@ -20,8 +20,8 @@ const NavBar = () => {
   return (
     <header className={`fixed top-0 left-0 w-full z-[100] transition-all duration-[800ms] ease-out ${scrolled ? 'py-[8px] pl-[30px] pr-[15px] shadow-[0_2px_20px_rgba(215,103,103,0.2)] bg-black/40 backdrop-blur-md' : 'py-6'}`}>
       <nav className="flex items-center justify-evenly flex-1 text-[15px] p-[1px] max-w-7xl mx-auto">
-        <a className={`text-[#d76767] font-bold no-underline whitespace-nowrap transition-all duration-[800ms] ease-out hover:text-white ${scrolled ? 'text-[13px]' : 'text-[15px]'}`} href="/">PORTFOLIO</a>
-        <a className={`text-[#d76767] font-bold no-underline whitespace-nowrap transition-all duration-[800ms] ease-out hover:text-white ${scrolled ? 'text-[13px]' : 'text-[15px]'}`} href="https://codolio.com/profile/AakashDSingh18" target="_blank" rel="noreferrer">CODOLIO</a>
+        <a className={`text-[#d76767] font-bold no-underline whitespace-nowrap transition-all duration-[800ms] ease-out hover:text-white ${scrolled ? 'text-[14px]' : 'text-[17px] tracking-wide'}`} href="/">PORTFOLIO</a>
+        <a className={`text-[#d76767] font-bold no-underline whitespace-nowrap transition-all duration-[800ms] ease-out hover:text-white ${scrolled ? 'text-[14px]' : 'text-[17px] tracking-wide'}`} href="https://codolio.com/profile/AakashDSingh18" target="_blank" rel="noreferrer">CODOLIO</a>
         <a href="/" className="relative flex items-center justify-center">
           <img 
             src={logoImage} 
@@ -34,10 +34,67 @@ const NavBar = () => {
           />
           <span className="hidden text-[#d76767] font-extrabold text-2xl tracking-widest uppercase">Aakash</span>
         </a>
-        <a className={`text-[#d76767] font-bold no-underline whitespace-nowrap transition-all duration-[800ms] ease-out hover:text-white ${scrolled ? 'text-[13px]' : 'text-[15px]'}`} href="https://github.com/AakashDSingh18" target="_blank" rel="noreferrer">GITHUB</a>
-        <a className={`text-[#d76767] font-bold no-underline whitespace-nowrap transition-all duration-[800ms] ease-out hover:text-white ${scrolled ? 'text-[13px]' : 'text-[15px]'}`} href="#contact">CONTACT</a>
+        <a className={`text-[#d76767] font-bold no-underline whitespace-nowrap transition-all duration-[800ms] ease-out hover:text-white ${scrolled ? 'text-[14px]' : 'text-[17px] tracking-wide'}`} href="https://github.com/AakashDSingh18" target="_blank" rel="noreferrer">GITHUB</a>
+        <a className={`text-[#d76767] font-bold no-underline whitespace-nowrap transition-all duration-[800ms] ease-out hover:text-white ${scrolled ? 'text-[14px]' : 'text-[17px] tracking-wide'}`} href="#contact">CONTACT</a>
       </nav>
     </header>
+  );
+};
+
+const BlurText = ({ text, className, delay = 0 }) => {
+  const words = text.split(" ");
+  const [mounted, setMounted] = useState(false);
+  
+  useEffect(() => {
+    const t = setTimeout(() => setMounted(true), delay);
+    return () => clearTimeout(t);
+  }, [delay]);
+
+  return (
+    <h1 className={`flex flex-wrap ${className}`}>
+      {words.map((word, i) => (
+        <span 
+          key={i} 
+          className="mr-3 lg:mr-4 transition-all duration-[800ms] ease-out"
+          style={{ 
+            opacity: mounted ? 1 : 0, 
+            filter: mounted ? 'blur(0px)' : 'blur(12px)',
+            transform: mounted ? 'translateY(0)' : 'translateY(15px)',
+            transitionDelay: mounted ? `${i * 120}ms` : '0ms'
+          }}
+        >
+          {word}
+        </span>
+      ))}
+    </h1>
+  );
+};
+
+const TypewriterText = ({ text, className, delay = 0, speed = 40 }) => {
+  const [displayedText, setDisplayedText] = useState("");
+  const [start, setStart] = useState(false);
+  
+  useEffect(() => {
+    const timer = setTimeout(() => setStart(true), delay);
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  useEffect(() => {
+    if (!start) return;
+    let i = 0;
+    const intervalId = setInterval(() => {
+      setDisplayedText(text.substring(0, i + 1));
+      i++;
+      if (i === text.length) clearInterval(intervalId);
+    }, speed);
+    return () => clearInterval(intervalId);
+  }, [text, speed, start]);
+
+  return (
+    <div className={className}>
+      {displayedText}
+      <span className="animate-pulse border-r-2 border-[#d76767] ml-1 h-[1em] inline-block align-middle" />
+    </div>
   );
 };
 
@@ -45,42 +102,48 @@ function App() {
   return (
     <SoftAroraBg>
       <NavBar />
-      <div className="fixed top-1/2 right-10 -translate-y-1/2 z-50 hidden md:block">
-        <IdCard
-          name="Aakash Deep Singh"
-          title="AI ML Engineer | Full Stack Developer"
-          handle=""
-          status="Online"
-          contactText="Contact Me"
-          avatarUrl={cardImage}
-          showUserInfo={false}
-          enableTilt={true}
-          enableMobileTilt={false}
-          onContactClick={() => console.log('Contact clicked')}
-          behindGlowColor="rgba(225, 0, 255, 0.4)"
-          iconUrl={cardImage}
-          behindGlowEnabled
-          innerGradient="linear-gradient(145deg, rgba(0, 0, 0, 0.15) 0%, rgba(1, 1, 1, 0.05) 100%)"
-        />
+      <div className="fixed inset-0 pointer-events-none z-50">
+        <div className="w-full h-full max-w-[1400px] mx-auto relative flex items-center justify-end pr-6 md:pr-10 lg:pr-12">
+          <div className="pointer-events-auto hidden md:block">
+            <IdCard
+              name="Aakash Deep Singh"
+              title="AI ML Engineer | Full Stack Developer"
+              handle=""
+              status="Online"
+              contactText="Contact Me"
+              avatarUrl={cardImage}
+              showUserInfo={false}
+              enableTilt={true}
+              enableMobileTilt={false}
+              onContactClick={() => console.log('Contact clicked')}
+              behindGlowColor="rgba(225, 0, 255, 0.4)"
+              iconUrl={cardImage}
+              behindGlowEnabled
+              innerGradient="linear-gradient(145deg, rgba(0, 0, 0, 0.15) 0%, rgba(1, 1, 1, 0.05) 100%)"
+            />
+          </div>
+        </div>
       </div>
-      <div className="min-h-screen bg-transparent flex items-center justify-center p-6">
-        <div className="max-w-2xl w-full bg-white rounded-2xl shadow-xl p-10 text-center space-y-8">
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
-            Welcome to My Portfolio
-          </h1>
+      <div className="min-h-screen flex items-center pl-6 md:pl-12 lg:pl-16 w-full max-w-[1400px] mx-auto pt-24 pb-10">
+        <div className="flex flex-col space-y-10 max-w-2xl lg:max-w-[800px] text-left z-10">
+          <BlurText 
+            text="Aakash Deep Singh" 
+            className="text-6xl md:text-7xl lg:text-[6rem] font-extrabold text-white tracking-tight leading-none" 
+            delay={200}
+          />
           
-          <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-lg mx-auto">
-            This is a fresh boilerplate set up with React, Vite, and <span className="text-blue-600 font-semibold">Tailwind CSS</span>. Ready to build something amazing?
-          </p>
+          <TypewriterText 
+            text="I am an AI ML Engineer and Full Stack Developer. I build intelligent data-driven solutions and craft premium digital experiences."
+            className="text-xl md:text-2xl lg:text-3xl text-gray-300 leading-relaxed font-light"
+            delay={1200}
+            speed={40}
+          />
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-            <button className="w-full sm:w-auto px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full transition-all transform hover:-translate-y-0.5 shadow-md hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-              View Projects
-            </button>
-            
-            <button className="w-full sm:w-auto px-8 py-3 bg-white hover:bg-gray-50 text-gray-700 font-medium rounded-full transition-all border-2 border-gray-200 shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-gray-200 focus:ring-offset-2">
-              Contact Me
-            </button>
+          <div className="pt-20 animate-bounce opacity-70">
+            <p className="text-gray-400 text-sm tracking-widest uppercase mb-3">Scroll Down for More</p>
+            <svg className="w-8 h-8 text-[#d76767]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
           </div>
         </div>
       </div>
