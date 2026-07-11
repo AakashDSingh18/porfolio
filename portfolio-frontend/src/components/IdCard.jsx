@@ -28,6 +28,111 @@ if (typeof document !== 'undefined' && !document.getElementById(KEYFRAMES_ID)) {
   document.head.appendChild(style);
 }
 
+const PixelCanvas = ({ colors = ['#ffffff', '#e2e2e2', '#a0a0a0'], pixelSize = 3, gap = 2 }) => {
+  const canvasRef = React.useRef(null);
+  
+  React.useEffect(() => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
+    let pixels = [];
+    let isHovering = false;
+    
+    // Parent container handles the hover state to communicate with canvas
+    const handleMouseEnter = () => { isHovering = true; };
+    const handleMouseLeave = () => { isHovering = false; };
+    
+    const parent = canvas.parentElement;
+    if (parent) {
+      parent.addEventListener('mouseenter', handleMouseEnter);
+      parent.addEventListener('mouseleave', handleMouseLeave);
+    }
+
+    const initPixels = () => {
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+      
+      const cols = Math.floor(rect.width / (pixelSize + gap));
+      const rows = Math.floor(rect.height / (pixelSize + gap));
+      
+      pixels = [];
+      for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+          pixels.push({
+            x: i * (pixelSize + gap),
+            y: j * (pixelSize + gap),
+            color: colors[Math.floor(Math.random() * colors.length)],
+            baseOpacity: 0.01 + Math.random() * 0.15, // Subtle idle state
+            targetOpacity: 0.05 + Math.random() * 0.15,
+            currentOpacity: 1 ,
+            speed: 0.09 + Math.random() * 0.06
+          });
+        }
+      }
+    };
+
+    const animate = () => {
+      if (!ctx || !canvas) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      for (let i = 0; i < pixels.length; i++) {
+        const p = pixels[i];
+        
+        if (isHovering) {
+          // Rapid, bright flickering on hover
+          if (Math.random() < 0.05) {
+            p.targetOpacity = 0.4 + Math.random() * 0.6; 
+          } else if (Math.random() < 0.05) {
+            p.targetOpacity = 0;
+          }
+        } else {
+          // Return to subtle idle state
+          if (Math.random() < 0.02) {
+             p.targetOpacity = p.baseOpacity;
+          }
+        }
+        
+        p.currentOpacity += (p.targetOpacity - p.currentOpacity) * p.speed;
+        
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = Math.max(0, Math.min(1, p.currentOpacity));
+        ctx.fillRect(p.x, p.y, pixelSize, pixelSize);
+      }
+      
+      animationFrameId = requestAnimationFrame(animate);
+    };
+    
+    initPixels();
+    animate();
+    
+    const handleResize = () => initPixels();
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      window.removeEventListener('resize', handleResize);
+      if (parent) {
+        parent.removeEventListener('mouseenter', handleMouseEnter);
+        parent.removeEventListener('mouseleave', handleMouseLeave);
+      }
+    };
+  }, [colors, pixelSize, gap]);
+
+  return (
+    <canvas 
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full z-[8] pointer-events-none mix-blend-overlay"
+      style={{ 
+        borderRadius: 'inherit',
+        maskImage: 'radial-gradient(circle at center, transparent 10%, black 80%)',
+        WebkitMaskImage: 'radial-gradient(circle at center, transparent 10%, black 80%)'
+      }}
+    />
+  );
+};
+
 const ProfileCardComponent = ({
   avatarUrl = '<Placeholder for avatar URL>',
   iconUrl = '<Placeholder for icon URL>',
@@ -467,6 +572,8 @@ const ProfileCardComponent = ({
               gridArea: '1 / -1'
             }}
           >
+            {/* Pixel Hover Effect (Canvas) */}
+            <PixelCanvas />
             {/* Shine layer */}
             <div style={shineStyle} />
 
