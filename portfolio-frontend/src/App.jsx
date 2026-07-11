@@ -1,17 +1,50 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import SoftAroraBg from './components/ui/SoftAroraBg';
 import IdCard from './components/IdCard';
 import cardImage from './assets/card.png';
+import logoImage from './assets/logo(1).png';
+
+const NavBar = () => {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 60) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  return (
+    <header className={`fixed top-0 left-0 w-full z-[100] transition-all duration-[800ms] ease-out ${scrolled ? 'py-[8px] pl-[30px] pr-[15px] shadow-[0_2px_20px_rgba(215,103,103,0.2)] bg-black/40 backdrop-blur-md' : 'py-6'}`}>
+      <nav className="flex items-center justify-evenly flex-1 text-[15px] p-[1px] max-w-7xl mx-auto">
+        <a className={`text-[#d76767] font-bold no-underline whitespace-nowrap transition-all duration-[800ms] ease-out hover:text-white ${scrolled ? 'text-[13px]' : 'text-[15px]'}`} href="/">PORTFOLIO</a>
+        <a className={`text-[#d76767] font-bold no-underline whitespace-nowrap transition-all duration-[800ms] ease-out hover:text-white ${scrolled ? 'text-[13px]' : 'text-[15px]'}`} href="https://codolio.com/profile/AakashDSingh18" target="_blank" rel="noreferrer">CODOLIO</a>
+        <a href="/" className="relative flex items-center justify-center">
+          <img 
+            src={logoImage} 
+            alt="Aakash" 
+            className={`transition-all duration-[800ms] ease-out object-contain ${scrolled ? 'w-[90px] h-[46px]' : 'w-[120px] h-[60px]'}`}
+            onError={(e) => {
+              e.target.style.display = 'none';
+              e.target.nextSibling.style.display = 'block';
+            }}
+          />
+          <span className="hidden text-[#d76767] font-extrabold text-2xl tracking-widest uppercase">Aakash</span>
+        </a>
+        <a className={`text-[#d76767] font-bold no-underline whitespace-nowrap transition-all duration-[800ms] ease-out hover:text-white ${scrolled ? 'text-[13px]' : 'text-[15px]'}`} href="https://github.com/AakashDSingh18" target="_blank" rel="noreferrer">GITHUB</a>
+        <a className={`text-[#d76767] font-bold no-underline whitespace-nowrap transition-all duration-[800ms] ease-out hover:text-white ${scrolled ? 'text-[13px]' : 'text-[15px]'}`} href="#contact">CONTACT</a>
+      </nav>
+    </header>
+  );
+};
 
 function App() {
   return (
     <SoftAroraBg>
-      {/* 
-        This wrapper makes the ID Card fixed to the right side of the screen.
-        'fixed' keeps it in place while you scroll.
-        'top-1/2 -translate-y-1/2' vertically centers it.
-        'right-10' adds some padding from the right edge.
-      */}
+      <NavBar />
       <div className="fixed top-1/2 right-10 -translate-y-1/2 z-50 hidden md:block">
         <IdCard
           name="Aakash Deep Singh"
@@ -27,7 +60,7 @@ function App() {
           behindGlowColor="rgba(225, 0, 255, 0.4)"
           iconUrl={cardImage}
           behindGlowEnabled
-          innerGradient="linear-gradient(145deg, rgba(225, 0, 255, 0.15) 0%, rgba(247, 247, 247, 0.05) 100%)"
+          innerGradient="linear-gradient(145deg, rgba(0, 0, 0, 0.15) 0%, rgba(1, 1, 1, 0.05) 100%)"
         />
       </div>
       <div className="min-h-screen bg-transparent flex items-center justify-center p-6">
