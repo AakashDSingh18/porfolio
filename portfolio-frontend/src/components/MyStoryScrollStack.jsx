@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-// Import images so the bundler processes them correctly!
 import scienceExhiImg from '../assets/scienceExhi.jpg';
 import headboyImg from '../assets/headboy.jpg';
 import ngoImg from '../assets/ngo.jpg';
@@ -17,10 +16,10 @@ const TypewriterText = ({ text, className, delay = 0, speed = 80 }) => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setTimeout(() => setStart(true), delay);
-          observer.disconnect(); // Only trigger once
+          observer.disconnect();
         }
       },
-      { threshold: 0.1 } // Triggers when 10% of the element is visible
+      { threshold: 0.1 }
     );
 
     if (ref.current) {
@@ -56,13 +55,12 @@ const MyStoryScrollStack = () => {
     { id: 3, title: 'NGO Volunteer', content: 'Volunteered in multiple NGO drives along with Sanskrit Youth Foundation and NSS.', minHeight: '450px', image: ngoImg },
     { id: 4, title: 'Problem Solving', content: 'Continuously working on my problem solving and DSA with weekly contests.', minHeight: '450px', image: dsaImg },
     { id: 5, title: 'Build With Udyami', content: 'Attended the Build With Udyami Bootcamp to work on WebDev with hands-on learning.', minHeight: '450px', image: bwuImg },
-    // { id: 6, title: 'Card 6', content: 'Edit this content', minHeight: '450px' },
+   
   ];
 
   return (
     <div className="w-full relative py-20 px-6 max-w-[1400px] mx-auto flex flex-col lg:flex-row-reverse pb-10">
-      
-      {/* RIGHT COLUMN: The Sticky Title */}
+
       <div className="w-full lg:w-5/12 lg:h-screen lg:sticky lg:top-0 flex flex-col justify-center items-start lg:pl-16 pt-10 lg:pt-0 mb-20 lg:mb-0 z-0">
          <TypewriterText 
             text="My Story Gallery" 
@@ -74,30 +72,28 @@ const MyStoryScrollStack = () => {
          </p>
       </div>
 
-      {/* LEFT COLUMN: The Stack Cards */}
       <div className="w-full lg:w-10/12 relative z-10">
         {cards.map((card, index) => (
           <div 
             key={card.id}
-            // The 'sticky' class makes the cards stack on top of each other as you scroll
+           
             className="sticky w-full max-w-5xl mx-auto rounded-3xl p-8 shadow-2xl flex flex-col md:flex-row gap-8 border border-white/10 overflow-hidden"
             style={{ 
-              // This calculates the vertical offset so they layer perfectly
+             
               top: `calc(100px + ${index * 30}px)`, 
               backgroundColor: 'rgba(20, 20, 30, 0.95)',
               backdropFilter: 'blur(10px)',
               zIndex: index + 1,
-              // Adjust this marginBottom to control how much you have to scroll before the next card appears
+             
               marginBottom: '15vh',
               minHeight: card.minHeight
             }}
           >
-            {/* Left Column: Image Placeholder */}
+            
             <div className="w-full md:w-9/12 h-56 md:h-auto bg-black/50 rounded-2xl border border-white/5 relative flex items-center justify-center overflow-hidden">
               <img src={card.image} alt={card.title} className="w-full h-full object-cover" />
             </div>
 
-            {/* Right Column: Text Content */}
             <div className="w-full md:w-7/12 flex flex-col justify-center">
               <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4 tracking-tight">{card.title}</h2>
               <p className="text-lg text-gray-300 leading-relaxed font-light">{card.content}</p>

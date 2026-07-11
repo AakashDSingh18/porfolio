@@ -55,18 +55,15 @@ const ResumeAndConnect = () => {
 
   return (
     <section className="w-full max-w-[1400px] mx-auto pt-10 pb-16 px-1 flex flex-col items-center relative z-20" id="contact">
-      
-      {/* Title */}
+
       <h1 className="text-6xl md:text-7xl lg:text-[5rem] font-extrabold text-white tracking-tight leading-none mb-8 hover:text-[#d76767] transition-colors duration-300 cursor-default">
         CONTACT
       </h1>
-      
-      {/* Subtitle */}
+
       <p className="text-xl md:text-2xl text-gray-400 font-light leading-relaxed text-center max-w-4xl tracking-wide mb-20">
         I am always looking for opportunities to grow, contribute, and network. I am currently open to internship positions, collaborative freelance projects, and professional networking.
       </p>
 
-      {/* Contact Tray */}
       <div className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6">
         {contactCards.map((card) => (
           <a 
@@ -76,7 +73,7 @@ const ResumeAndConnect = () => {
             rel="noopener noreferrer"
             className="group relative w-full h-[280px] md:h-[350px] rounded-[2rem] border-4 border-[#432727] bg-[#111115] overflow-hidden shadow-2xl transition-transform duration-300 hover:scale-[1.03]"
           >
-            {/* The Text & Icon Layer (Starts centered, drops down to 75% on hover) */}
+            
             <div className="absolute inset-0 flex items-center justify-center translate-y-0 group-hover:translate-y-[75%] transition-transform duration-[600ms] ease-[cubic-bezier(0.25,1,0.5,1)] z-10 pointer-events-none">
               <div className="flex items-center gap-4 bg-black/50 px-6 py-4 rounded-2xl backdrop-blur-md shadow-xl border border-white/5">
                 <span className={`text-3xl md:text-4xl font-extrabold ${card.textColor}`}>{card.title}</span>
@@ -84,18 +81,17 @@ const ResumeAndConnect = () => {
               </div>
             </div>
 
-            {/* The Reveal Image Layer (Starts above at -100%, drops down into view on hover) */}
             <div 
               className="absolute inset-0 -translate-y-full group-hover:translate-y-0 transition-transform duration-[600ms] ease-[cubic-bezier(0.25,1,0.5,1)] z-0"
               style={{
                 background: card.bgImage,
-                backgroundColor: '#111115', // Clean fallback color behind the image
-                backgroundSize: 'contain', // Fits the image perfectly inside the card without cropping
+                backgroundColor: '#111115',
+                backgroundSize: 'contain',
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat'
               }}
             >
-              {/* NOTE: You can replace 'card.bgImage' in the array above with real images! */}
+              
             </div>
           </a>
         ))}

@@ -13,8 +13,7 @@ const ANIMATION_CONFIG = {
 const clamp = (v, min = 0, max = 100) => Math.min(Math.max(v, min), max);
 const round = (v, precision = 3) => parseFloat(v.toFixed(precision));
 const adjust = (v, fMin, fMax, tMin, tMax) => round(tMin + ((tMax - tMin) * (v - fMin)) / (fMax - fMin));
-
-// Inject keyframes once
+
 const KEYFRAMES_ID = 'pc-keyframes';
 if (typeof document !== 'undefined' && !document.getElementById(KEYFRAMES_ID)) {
   const style = document.createElement('style');
@@ -37,8 +36,7 @@ const PixelCanvas = ({ colors = ['#ffffff', '#e2e2e2', '#a0a0a0'], pixelSize = 3
     let animationFrameId;
     let pixels = [];
     let isHovering = false;
-    
-    // Parent container handles the hover state to communicate with canvas
+
     const handleMouseEnter = () => { isHovering = true; };
     const handleMouseLeave = () => { isHovering = false; };
     
@@ -64,7 +62,7 @@ const PixelCanvas = ({ colors = ['#ffffff', '#e2e2e2', '#a0a0a0'], pixelSize = 3
             x: i * (pixelSize + gap),
             y: j * (pixelSize + gap),
             color: colors[Math.floor(Math.random() * colors.length)],
-            baseOpacity: 0.01 + Math.random() * 0.15, // Subtle idle state
+            baseOpacity: 0.01 + Math.random() * 0.15,
             targetOpacity: 0.05 + Math.random() * 0.15,
             currentOpacity: 1 ,
             speed: 0.09 + Math.random() * 0.06
@@ -81,14 +79,14 @@ const PixelCanvas = ({ colors = ['#ffffff', '#e2e2e2', '#a0a0a0'], pixelSize = 3
         const p = pixels[i];
         
         if (isHovering) {
-          // Rapid, bright flickering on hover
+         
           if (Math.random() < 0.05) {
             p.targetOpacity = 0.4 + Math.random() * 0.6; 
           } else if (Math.random() < 0.05) {
             p.targetOpacity = 0;
           }
         } else {
-          // Return to subtle idle state
+         
           if (Math.random() < 0.02) {
              p.targetOpacity = p.baseOpacity;
           }
@@ -447,7 +445,6 @@ const ProfileCardComponent = ({
     onContactClick?.();
   }, [onContactClick]);
 
-  // Complex styles that require CSS variables and can't be done with Tailwind
   const shineStyle = {
     maskImage: 'var(--icon)',
     maskMode: 'luminance',
@@ -455,7 +452,7 @@ const ProfileCardComponent = ({
     maskSize: '150%',
     maskPosition: 'top calc(200% - (var(--background-y) * 5)) left calc(100% - var(--background-x))',
     filter: 'brightness(0.66) contrast(2) saturate(0.33) opacity(0.5)',
-    opacity: 0.2, // Reduced front layer opacity to make image pop
+    opacity: 0.2,
     animation: 'pc-holo-bg 18s linear infinite',
     animationPlayState: 'running',
     mixBlendMode: 'color-dodge',
@@ -463,7 +460,7 @@ const ProfileCardComponent = ({
     '--angle': '-45deg',
     transform: 'translate3d(0, 0, 1px)',
     overflow: 'hidden',
-    zIndex: 6, // Moved ON TOP of the image (zIndex: 5)
+    zIndex: 6,
     background: 'transparent',
     backgroundSize: 'cover',
     backgroundPosition: 'center',
@@ -508,9 +505,9 @@ const ProfileCardComponent = ({
       hsla(207, 40%, 30%, 0.8) 90%
     )`,
     mixBlendMode: 'overlay',
-    opacity: 0.3, // Reduced glare opacity
+    opacity: 0.3,
     filter: 'brightness(0.8) contrast(1.2)',
-    zIndex: 7, // Moved ON TOP of the image (zIndex: 5)
+    zIndex: 7,
     gridArea: '1 / -1',
     borderRadius: cardRadius,
     pointerEvents: 'none'
@@ -545,8 +542,8 @@ const ProfileCardComponent = ({
               'rgba(0, 0, 0, 0.15) calc((var(--pointer-from-left) * 10px) - 3px) calc((var(--pointer-from-top) * 20px) - 6px) 20px -5px',
             transition: 'transform 1s ease',
             transform: 'translateZ(0) rotateX(0deg) rotateY(0deg)',
-            background: 'rgba(20, 10, 30, 0.2)', // translucent to merge with aurora
-            backdropFilter: 'blur(12px)' // Glassmorphism effect to merge with webpage
+            background: 'rgba(20, 10, 30, 0.2)',
+            backdropFilter: 'blur(12px)'
           }}
           onMouseEnter={e => {
             e.currentTarget.style.transition = 'none';
@@ -572,20 +569,18 @@ const ProfileCardComponent = ({
               gridArea: '1 / -1'
             }}
           >
-            {/* Pixel Hover Effect (Canvas) */}
+            
             <PixelCanvas />
-            {/* Shine layer */}
+            
             <div style={shineStyle} />
 
-            {/* Glare layer */}
             <div style={glareStyle} />
 
-            {/* Avatar content */}
             <div
               className="overflow-visible backface-hidden"
               style={{
                 mixBlendMode: 'normal', 
-                opacity: 0.75, // Lets the card's inner gradient shine perfectly through the image!
+                opacity: 0.75,
                 transform: 'translateZ(2px)',
                 gridArea: '1 / -1',
                 borderRadius: cardRadius,
@@ -659,7 +654,6 @@ const ProfileCardComponent = ({
               )}
             </div>
 
-            {/* Details content */}
             <div
               className="max-h-full overflow-hidden text-center relative z-[5]"
               style={{
