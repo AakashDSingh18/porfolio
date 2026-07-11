@@ -259,9 +259,9 @@ export default function SoftAroraBg({
     };
   }, [speed, scale, brightness, color1, color2, noiseFrequency, noiseAmplitude, bandHeight, bandSpread, octaveDecay, layerOffset, colorSpeed, enableMouseInteraction, mouseInfluence]);
   return (
-    <div className="relative w-full min-h-screen overflow-hidden bg-black">
-      {/* Background canvas container positioned absolutely behind children */}
-      <div ref={containerRef} className="absolute inset-0 w-full h-full z-0" />
+    <div className="relative w-full min-h-screen bg-black">
+      {/* Background canvas container positioned absolute behind children */}
+      <div ref={containerRef} className="absolute inset-0 w-full h-full z-0 pointer-events-none overflow-hidden" />
       {/* Content wrapper taking standard z-index above the background */}
       <div className="relative z-10 w-full h-full">
         {children}

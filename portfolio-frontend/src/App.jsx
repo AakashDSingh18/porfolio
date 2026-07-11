@@ -3,6 +3,7 @@ import SoftAroraBg from './components/ui/SoftAroraBg';
 import IdCard from './components/IdCard';
 import cardImage from './assets/card.png';
 import logoImage from './assets/logo(1).png';
+import MyStoryScrollStack from './components/MyStoryScrollStack.jsx';
 
 const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -100,9 +101,10 @@ const TypewriterText = ({ text, className, delay = 0, speed = 40 }) => {
 
 function App() {
   return (
+    <div className="bg-[#050505] min-h-screen text-white">
     <SoftAroraBg>
       <NavBar />
-      <div className="fixed inset-0 pointer-events-none z-50">
+      <div className="absolute inset-0 pointer-events-none z-50">
         <div className="w-full h-full max-w-[1400px] mx-auto relative flex items-center justify-end pr-6 md:pr-10 lg:pr-12">
           <div className="pointer-events-auto hidden md:block">
             <IdCard
@@ -147,7 +149,10 @@ function App() {
           </div>
         </div>
       </div>
+
     </SoftAroraBg>
+    <MyStoryScrollStack />
+    </div>
   );
 }
 
