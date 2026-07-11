@@ -349,7 +349,7 @@ const ProfileCardComponent = ({
     maskRepeat: 'repeat',
     maskSize: '150%',
     maskPosition: 'top calc(200% - (var(--background-y) * 5)) left calc(100% - var(--background-x))',
-    filter: 'brightness(0.66) contrast(1.33) saturate(0.33) opacity(0.5)',
+    filter: 'brightness(0.66) contrast(2) saturate(0.33) opacity(0.5)',
     opacity: 0.2, // Reduced front layer opacity to make image pop
     animation: 'pc-holo-bg 18s linear infinite',
     animationPlayState: 'running',
@@ -477,12 +477,13 @@ const ProfileCardComponent = ({
             <div
               className="overflow-visible backface-hidden"
               style={{
-                mixBlendMode: 'normal', // Removed luminosity so image has full vibrant color
+                mixBlendMode: 'normal', 
+                opacity: 0.75, // Lets the card's inner gradient shine perfectly through the image!
                 transform: 'translateZ(2px)',
                 gridArea: '1 / -1',
                 borderRadius: cardRadius,
                 pointerEvents: 'none',
-                zIndex: 5 // Forces image to render ON TOP of the gradients
+                zIndex: 5 
               }}
             >
               <img

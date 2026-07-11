@@ -1,7 +1,7 @@
 import React from 'react';
 import SoftAroraBg from './components/ui/SoftAroraBg';
 import IdCard from './components/IdCard';
-import cardImage from './assets/card.jpeg';
+import cardImage from './assets/card.png';
 
 function App() {
   return (
