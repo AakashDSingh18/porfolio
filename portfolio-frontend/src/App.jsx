@@ -102,7 +102,7 @@ const TypewriterText = ({ text, className, delay = 0, speed = 40 }) => {
 
 function App() {
   return (
-    <div className="w-full bg-[#050505] min-h-screen font-sans text-white overflow-x-hidden selection:bg-[#d76767] selection:text-white">
+    <div className="w-full bg-[#050505] min-h-screen font-sans text-white selection:bg-[#d76767] selection:text-white">
       <NavBar />
       <SoftAroraBg>
       <div className="absolute inset-0 pointer-events-none z-50">
