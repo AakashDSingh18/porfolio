@@ -60,7 +60,7 @@ const MyStoryScrollStack = () => {
   ];
 
   return (
-    <div className="w-full relative py-20 px-6 max-w-[1400px] mx-auto flex flex-col lg:flex-row-reverse pb-64">
+    <div className="w-full relative py-20 px-6 max-w-[1400px] mx-auto flex flex-col lg:flex-row-reverse pb-10">
       
       {/* RIGHT COLUMN: The Sticky Title */}
       <div className="w-full lg:w-5/12 lg:h-screen lg:sticky lg:top-0 flex flex-col justify-center items-start lg:pl-16 pt-10 lg:pt-0 mb-20 lg:mb-0 z-0">
@@ -86,7 +86,7 @@ const MyStoryScrollStack = () => {
               top: `calc(100px + ${index * 30}px)`, 
               backgroundColor: 'rgba(20, 20, 30, 0.95)',
               backdropFilter: 'blur(10px)',
-              zIndex: index + 2,
+              zIndex: index + 1,
               // Adjust this marginBottom to control how much you have to scroll before the next card appears
               marginBottom: '15vh',
               minHeight: card.minHeight

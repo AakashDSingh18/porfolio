@@ -3,7 +3,8 @@ import SoftAroraBg from './components/ui/SoftAroraBg';
 import IdCard from './components/IdCard';
 import cardImage from './assets/card.png';
 import logoImage from './assets/logo(1).png';
-import MyStoryScrollStack from './components/MyStoryScrollStack.jsx';
+import MyStoryScrollStack from './components/MyStoryScrollStack';
+import ResumeAndConnect from './components/ResumeAndConnect';
 
 const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -152,6 +153,7 @@ function App() {
 
     </SoftAroraBg>
     <MyStoryScrollStack />
+    <ResumeAndConnect />
     </div>
   );
 }
